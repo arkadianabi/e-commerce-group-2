@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Front\HomeController; 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// halaman beranda (daftar produk)
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// halaman detail produk (berdasarkan slug)
+Route::get('/product/{slug}', [HomeController::class, 'show'])->name('product.detail');
+
+// authentication dari Laravel Breeze
 
 Route::get('/dashboard', function () {
     return view('dashboard');
