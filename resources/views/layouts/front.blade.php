@@ -3,187 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Toko Online') - Mahasiswa Store</title>
+    <title>@yield('title', 'Toko Online') - Tech Store</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        'primary-dark': '#4338ca',
+                        'primary-light': '#e0e7ff',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        :root {
-            --primary-color: #4f46e5;     
-            --primary-hover: #4338ca;       
-            --primary-subtle: #e0e7ff;      
-            --text-dark: #0f172a;
-            --text-gray: #64748b;
-            --bg-body: #f8fafc;
-        }
-
-        body, .navbar-brand, .nav-link, h1, h2, h3, h4, h5, h6, p, span, small, button, a {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.8rem 0;
-        }
-
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--text-dark) !important;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-link {
-            font-weight: 600;
-            color: var(--text-gray) !important;
-            margin: 0 4px;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-color) !important;
-        }
-
-        .btn-nav {
-            padding: 8px 24px !important;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .btn-nav-login {
-            background: white;
-            border: 2px solid #e2e8f0;
-            color: var(--text-dark) !important;
-        }
-
-        .btn-nav-login:hover {
-            background-color: var(--primary-subtle); 
-            border-color: var(--primary-color);     
-            color: var(--primary-color) !important;  
-            transform: translateY(-2px);            
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
-        }
-
-        .btn-nav-register {
-            background: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            color: white !important;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
-        }
-
-        .btn-nav-register:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-            color: white !important;                 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-        }
-
-        footer {
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            margin-top: auto;
-            padding: 1.5rem 0;
-            font-size: 0.85rem;
-        }
+        html { scroll-behavior: smooth; } 
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .snap-x-mandatory { scroll-snap-type: x mandatory; }
+        .snap-center { scroll-snap-align: center; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
 
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container-xl"> 
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-                <i class="bi bi-bag-heart-fill" style="color: var(--primary-color); font-size: 1.4rem;"></i>
-                MahasiswaStore.
-            </a>
-            
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav x-data="{ mobileMenuOpen: false }" class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('home') }}" class="font-extrabold text-xl tracking-tight text-slate-900">
+                        Tech<span class="text-primary">Store.</span>
+                    </a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2"> <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="#">Katalog</a>
-                    </li>
-
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{ route('home') }}" class="text-sm font-semibold {{ request()->routeIs('home') && !request()->has('category') ? 'text-primary' : 'text-slate-600 hover:text-primary' }} transition-colors">Beranda</a>
+                    
+                    <a href="{{ route('home') }}#katalog" class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors">Katalog</a>
+                    
                     @auth
-                        <li class="nav-item dropdown ms-lg-2">
-                            <a class="nav-link dropdown-toggle fw-bold text-dark bg-light rounded-pill px-3 border" href="#" role="button" data-bs-toggle="dropdown">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 mt-2 p-2" style="font-size: 0.9rem;">
-                                <li><a class="dropdown-item rounded-3 py-2" href="{{ route('dashboard') }}"><i class="bi bi-grid me-2"></i> Dashboard</a></li>
-                                <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="bi bi-cart me-2"></i> Keranjang</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item rounded-3 text-danger fw-bold py-2">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-2 text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-full transition-colors">
+                                <span>{{ Auth::user()->name }}</span>
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </button>
+
+                            <div x-show="open" 
+                                 class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-1" 
+                                 style="display: none;">
+                                <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-primary">Dashboard</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold">Logout</button>
+                                </form>
+                            </div>
+                        </div>
                     @else
-                        <li class="nav-item">
-                            <a class="btn-nav btn-nav-login" href="{{ route('login') }}">
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('login') }}" class="text-sm font-bold text-slate-700 hover:text-primary hover:bg-primary-light/50 px-4 py-2 rounded-full border border-slate-200 hover:border-primary transition-colors">
                                 Masuk
                             </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="btn-nav btn-nav-register" href="{{ route('register') }}">
+                            <a href="{{ route('register') }}" class="text-sm font-bold text-white bg-primary hover:bg-primary-dark px-5 py-2 rounded-full shadow-md hover:shadow-lg transition-colors">
                                 Daftar
                             </a>
-                        </li>
+                        </div>
                     @endauth
-                </ul>
+                </div>
+
+                <div class="flex items-center md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-slate-600 hover:text-primary p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <div x-show="mobileMenuOpen" class="md:hidden bg-white border-t border-slate-100 p-4 space-y-3 shadow-lg" style="display: none;">
+            <a href="{{ route('home') }}" class="block font-semibold text-primary">Beranda</a>
+            <a href="{{ route('home') }}#katalog" class="block font-semibold text-slate-600">Katalog</a>
+            @auth
+                <div class="pt-3 border-t border-slate-100">
+                    <div class="font-bold text-slate-800 mb-2">{{ Auth::user()->name }}</div>
+                    <a href="{{ route('dashboard') }}" class="block py-2 text-sm text-slate-600">Dashboard</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="block py-2 text-sm text-red-600 font-bold">Logout</button>
+                    </form>
+                </div>
+            @else
+                <div class="pt-3 flex flex-col gap-2">
+                    <a href="{{ route('login') }}" class="w-full text-center py-2 rounded-lg border border-slate-200 font-bold text-slate-700 hover:bg-slate-50">Masuk</a>
+                    <a href="{{ route('register') }}" class="w-full text-center py-2 rounded-lg bg-primary text-white font-bold hover:bg-primary-dark">Daftar</a>
+                </div>
+            @endauth
         </div>
     </nav>
 
-    <main>
+    <main class="flex-grow">
         @yield('content')
     </main>
 
-    <footer>
-        <div class="container-xl text-center">
-            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1 gap-md-3">
-                <span class="fw-bold text-dark">MahasiswaStore &copy; {{ date('Y') }}</span>
-                <span class="d-none d-md-block text-muted">|</span>
-                <span class="text-secondary">Tugas Praktikum Pemrograman Web - FILKOM</span>
-            </div>
+    <footer class="bg-white border-t border-slate-200 py-8 mt-10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-500 text-sm font-medium">
+                &copy; {{ date('Y') }} <span class="text-primary font-bold">Tech Store</span>.
+            </p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

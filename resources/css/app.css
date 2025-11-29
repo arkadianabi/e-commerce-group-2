@@ -1,3 +1,267 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =========================================
+   CUSTOM STYLES (Pindahan dari Blade)
+   ========================================= */
+
+/* --- 1. GLOBAL & NAVBAR --- */
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-subtle: #e0e7ff;
+    --text-dark: #0f172a;
+    --text-gray: #64748b;
+    --bg-body: #f8fafc;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Navbar Putih Transparan */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text-dark) !important;
+}
+
+.nav-link {
+    font-weight: 600;
+    color: var(--text-gray) !important;
+    margin: 0 4px;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+/* Tombol Login & Daftar di Navbar */
+.btn-nav {
+    padding: 8px 24px !important;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.btn-nav-login {
+    background: white;
+    border: 2px solid #e2e8f0;
+    color: var(--text-dark) !important;
+}
+
+.btn-nav-login:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color) !important;
+}
+
+.btn-nav-register {
+    background: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    color: white !important;
+}
+
+.btn-nav-register:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- 2. HALAMAN HOME (Card Produk) --- */
+.main-canvas {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+    padding: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero-carousel {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.carousel-item { height: 320px; }
+.bg-slide-1 { background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); }
+.bg-slide-2 { background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); }
+.bg-slide-3 { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); }
+
+.carousel-content-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Filter Kategori Scroll */
+.category-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.btn-cat {
+    white-space: nowrap;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: var(--text-gray);
+    cursor: pointer;
+}
+
+.btn-cat.active, .btn-cat:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Kartu Produk */
+.product-card {
+    background: white;
+    border: 1px solid #f1f5f9;
+    border-radius: 16px;
+    padding: 10px;
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.card-img-wrapper {
+    background: #f8fafc;
+    border-radius: 12px;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.price-text {
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+/* --- 3. HALAMAN DETAIL --- */
+.img-display-area {
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 2rem;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1f5f9;
+}
+
+.img-display-area img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.thumb-scroll {
+    display: flex;
+    gap: 10px;
+    margin-top: 1rem;
+    overflow-x: auto;
+}
+
+.thumb-item {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    object-fit: cover;
+    background: #f1f5f9;
+}
+
+.thumb-item.active {
+    border-color: var(--primary-color);
+}
+
+.prod-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.price-big {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.specs-box {
+    display: flex;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.spec-item {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-right: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+.spec-item:last-child { border-right: none; }
+
+.btn-action {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: 700;
+}
+
+.btn-outline-custom {
+    border: 2px solid #e2e8f0;
+    color: var(--text-dark);
+}
+
+.btn-primary-custom {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+}
