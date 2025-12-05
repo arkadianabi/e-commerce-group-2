@@ -9,22 +9,29 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $categories = ProductCategory::all();
-        $products = Product::with(['productCategory', 'productImages'])->latest()->get();
+        
+        $query = Product::with(['productCategory', 'productImages', 'store'])->latest(); 
+
+        if ($request->has('category') && $request->category != null) {
+            $query->whereHas('productCategory', function($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        }
+        
+        $products = $query->get();
+        
         return view('front.home', compact('categories', 'products'));
     }
 
     public function show($slug)
     {
-        // mencari produk berdasarkan slug
-        // jika tidak ditemukan, menampilkan halaman 404
         $product = Product::with(['productCategory', 'productImages', 'store'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // menampilkan halaman detail produk
         return view('front.details', compact('product'));
     }
 }

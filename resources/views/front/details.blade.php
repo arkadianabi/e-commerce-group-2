@@ -4,288 +4,134 @@
 
 @section('content')
 
-<style>
-    :root {
-        --primary-color: #4f46e5;      
-        --primary-hover: #4338ca;       
-        --primary-subtle: #e0e7ff;     
-        --text-dark: #0f172a;
-        --text-gray: #64748b;
-    }
-
-    body, h1, h2, h3, h4, p, div, span, button, a {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-    }
-
-    .main-canvas {
-        background: #ffffff;
-        border-radius: 24px;
-        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05); 
-        padding: 2.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .img-display-area {
-        background: #f8fafc;
-        border-radius: 20px;
-        padding: 2rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 420px;
-        border: 1px solid #f1f5f9;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .img-display-area img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: contain;
-        transition: transform 0.3s ease;
-    }
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    .img-display-area:hover img {
-        transform: scale(1.05);
-    }
-
-    .thumb-scroll {
-        display: flex;
-        gap: 12px;
-        overflow-x: auto;
-        padding: 4px;
-        scrollbar-width: none;
-    }
-    .thumb-scroll::-webkit-scrollbar { display: none; }
-
-    .thumb-item {
-        width: 72px;
-        height: 72px;
-        border-radius: 14px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        background: #f1f5f9;
-        object-fit: cover;
-        opacity: 0.6;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .thumb-item:hover {
-        border-color: var(--primary-color);
-        opacity: 1;
-        transform: translateY(-3px);
-    }
-
-    .thumb-item.active {
-        border-color: var(--primary-color);
-        opacity: 1;
-        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-    }
-
-    .cat-badge {
-        background: var(--primary-subtle);
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 0.75rem;
-        padding: 6px 14px;
-        border-radius: 30px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        display: inline-block;
-        margin-bottom: 12px;
-    }
-
-    .prod-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: var(--text-dark);
-        line-height: 1.25;
-        margin-bottom: 1rem;
-        letter-spacing: -0.5px;
-    }
-
-    .price-big {
-        font-size: 2.25rem;
-        font-weight: 800;
-        color: var(--primary-color);
-        letter-spacing: -1px;
-        margin-bottom: 1.5rem;
-    }
-
-    .specs-box {
-        display: flex;
-        gap: 0; 
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        overflow: hidden;
-        margin-bottom: 2rem;
-    }
-
-    .spec-item {
-        flex: 1;
-        text-align: center;
-        padding: 1rem;
-        border-right: 1px solid #e2e8f0;
-        background: #f8fafc;
-    }
-    .spec-item:last-child { border-right: none; }
-
-    .spec-item small {
-        display: block;
-        color: var(--text-gray);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        font-weight: 600;
-        margin-bottom: 4px;
-    }
-    .spec-item span {
-        font-weight: 700;
-        color: var(--text-dark);
-        font-size: 1rem;
-    }
-
-    .btn-action-wrapper {
-        display: flex;
-        gap: 16px;
-        margin-top: 2rem;
-    }
-
-    .btn-action {
-        flex: 1;
-        padding: 14px 0;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-        position: relative;
-    }
-
-    .btn-outline-custom {
-        background: white;
-        border: 2px solid #e2e8f0;
-        color: var(--text-dark);
-    }
-
-    .btn-outline-custom:hover {
-        background-color: var(--primary-subtle); 
-        border-color: var(--primary-color);
-        color: var(--primary-color) !important; 
-        transform: translateY(-3px); 
-        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15); 
-    }
-
-    .btn-primary-custom {
-        background: var(--primary-color);
-        border: 2px solid var(--primary-color);
-        color: white;
-        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-    }
-
-    .btn-primary-custom:hover {
-        background-color: var(--primary-hover);
-        border-color: var(--primary-hover);
-        color: white !important; 
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4); 
-    }
-
-    .desc-box p {
-        color: var(--text-gray);
-        line-height: 1.7;
-        font-size: 0.95rem;
-    }
-</style>
-
-<div class="container-xl">
-    <div class="main-canvas">
-        <div class="row g-5">
+    <div class="bg-white rounded-2xl shadow-lg shadow-indigo-50/50 border border-slate-100 p-6 md:p-8 relative overflow-hidden">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12" 
+             x-data="{ activeImage: '{{ asset('storage/' . $product->thumbnail) }}' }">
             
-            <div class="col-lg-6">
-                <div class="img-display-area">
-                    <img id="mainViewer" src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }}">
+            <div class="space-y-4">
+                <div class="bg-slate-50 rounded-xl border border-slate-100 overflow-hidden aspect-square flex items-center justify-center relative">
+                    <img :src="activeImage" alt="{{ $product->name }}" 
+                         class="max-w-[85%] max-h-[85%] object-contain transition-opacity duration-300 ease-in-out"
+                         x-transition:enter="opacity-0"
+                         x-transition:enter-end="opacity-100">
                 </div>
-                
-                <div class="thumb-scroll">
-                    <img src="{{ asset('storage/' . $product->thumbnail) }}" 
-                         class="thumb-item active" 
-                         onclick="switchImage(this.src, this)">
+
+                <div class="flex gap-3 overflow-x-auto hide-scroll py-1 justify-center md:justify-start">
+                    <button @click="activeImage = '{{ asset('storage/' . $product->thumbnail) }}'" 
+                            class="flex-shrink-0 w-20 h-20 rounded-lg border-2 overflow-hidden bg-slate-50 transition-colors duration-200"
+                            :class="activeImage === '{{ asset('storage/' . $product->thumbnail) }}' 
+                                ? 'border-primary ring-2 ring-primary/10' 
+                                : 'border-slate-100 hover:border-slate-300'">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" class="w-full h-full object-cover p-1">
+                    </button>
 
                     @foreach($product->images as $img)
-                        <img src="{{ asset('storage/' . $img->image) }}" 
-                             class="thumb-item" 
-                             onclick="switchImage(this.src, this)">
+                        @if($img->image !== $product->thumbnail) 
+                            <button @click="activeImage = '{{ asset('storage/' . $img->image) }}'" 
+                                    class="flex-shrink-0 w-20 h-20 rounded-lg border-2 overflow-hidden bg-slate-50 transition-colors duration-200"
+                                    :class="activeImage === '{{ asset('storage/' . $img->image) }}' 
+                                        ? 'border-primary ring-2 ring-primary/10' 
+                                        : 'border-slate-100 hover:border-slate-300'">
+                                <img src="{{ asset('storage/' . $img->image) }}" class="w-full h-full object-cover p-1">
+                            </button>
+                        @endif
                     @endforeach
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="ps-lg-3">
-                    <span class="cat-badge">{{ $product->productCategory->name }}</span>
+            <div class="flex flex-col h-full py-1">
+                
+                <div class="mb-6">
+                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-[10px] font-bold text-primary uppercase tracking-widest mb-3">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                        {{ $product->category->name ?? 'Umum' }}
+                    </div>
                     
-                    <h1 class="prod-title">{{ $product->name }}</h1>
+                    <h1 class="text-2xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-4">
+                        {{ $product->name }}
+                    </h1>
                     
-                    <div class="price-big">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-5">
+                        <div class="bg-gradient-to-br from-primary to-purple-600 text-white w-9 h-9 rounded-lg flex items-center justify-center shadow-md shadow-primary/30">
+                            <i class="fa-solid fa-bag-shopping text-xs"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Official Store</p>
+                            <p class="text-sm font-bold text-slate-800">{{ $product->store->name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Harga Spesial</p>
+                    <div class="text-3xl md:text-4xl font-black text-primary">
                         Rp {{ number_format($product->price, 0, ',', '.') }}
                     </div>
-
-                    <div class="specs-box">
-                        <div class="spec-item">
-                            <small>Kondisi</small>
-                            <span class="text-capitalize">{{ $product->condition }}</span>
-                        </div>
-                        <div class="spec-item">
-                            <small>Berat</small>
-                            <span>{{ $product->weight }} gr</span>
-                        </div>
-                        <div class="spec-item">
-                            <small>Stok</small>
-                            <span>{{ $product->stock }}</span>
-                        </div>
-                    </div>
-
-                    <div class="desc-box">
-                        <h5 class="fw-bold mb-3 text-dark">Deskripsi Produk</h5>
-                        <p class="text-justify">
-                            {{ $product->description }}
-                        </p>
-                    </div>
-
-                    <form action="#" method="POST">
-                        @csrf
-                        <div class="btn-action-wrapper">
-                            <button type="submit" class="btn btn-outline-custom btn-action">
-                                <i class="bi bi-cart-plus"></i> Keranjang
-                            </button>
-                            
-                            <button type="button" class="btn btn-primary-custom btn-action">
-                                Beli Sekarang
-                            </button>
-                        </div>
-                    </form>
-
                 </div>
+
+                <div class="grid grid-cols-3 gap-3 mb-6">
+                    <div class="p-3 rounded-xl border border-slate-100 text-center bg-slate-50/50">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Kondisi</p>
+                        <p class="text-sm font-bold text-slate-900 capitalize">{{ $product->condition }}</p>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 text-center bg-slate-50/50">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Berat</p>
+                        <p class="text-sm font-bold text-slate-900">{{ $product->weight }} gr</p>
+                    </div>
+                    <div class="p-3 rounded-xl border border-slate-100 text-center bg-slate-50/50">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Stok</p>
+                        <p class="text-sm font-bold text-slate-900">{{ $product->stock }}</p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="text-base font-bold text-slate-900 mb-2">Deskripsi Produk</h3>
+                    <div class="prose prose-slate prose-sm max-w-none text-slate-600 leading-relaxed text-sm">
+                        <p>{{ $product->description }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-auto grid grid-cols-2 gap-3">
+                    @auth
+                        <form action="#" method="POST" class="w-full">
+                            @csrf
+                            <button type="submit" class="w-full px-5 py-3 rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-primary hover:text-primary bg-white transition-colors duration-200 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-cart-plus"></i> 
+                                <span>Keranjang</span>
+                            </button>
+                        </form>
+                        
+                        <button class="px-5 py-3 rounded-xl font-bold text-white bg-primary hover:bg-primary-dark shadow-lg shadow-indigo-500/30 transition-colors duration-200 flex items-center justify-center gap-2">
+                            <span>Beli Sekarang</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    @else
+                        <a href="{{ route('login') }}" class="px-5 py-3 rounded-xl font-bold text-slate-700 border-2 border-slate-200 hover:border-primary hover:text-primary bg-white transition-colors duration-200 flex items-center justify-center gap-2 text-center">
+                            <i class="fa-solid fa-cart-plus"></i> 
+                            <span>Keranjang</span>
+                        </a>
+                        
+                        <a href="{{ route('login') }}" class="px-5 py-3 rounded-xl font-bold text-white bg-primary hover:bg-primary-dark shadow-lg shadow-indigo-500/30 transition-colors duration-200 flex items-center justify-center gap-2 text-center">
+                            <span>Beli Sekarang</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    @endauth
+                </div>
+
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    function switchImage(src, element) {
-        // Ganti gambar utama
-        document.getElementById('mainViewer').src = src;
-        
-        // Hapus active dari semua thumbnail
-        document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-        
-        // Tambah active ke yang diklik
-        element.classList.add('active');
-    }
-</script>
+    <div class="mt-6 flex justify-start">
+        <a href="{{ route('home') }}" class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold text-slate-700 transition-colors bg-white border-2 border-slate-200 hover:border-primary hover:text-primary rounded-xl shadow-sm">
+            <i class="fa-solid fa-arrow-left mr-2"></i> 
+            Kembali ke Katalog
+        </a>
+    </div>
+
+</div>
 
 @endsection

@@ -1,189 +1,163 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Toko Online') - Mahasiswa Store</title>
+    <title>@yield('title', 'Toko Online') - Tech Store</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5', // Indigo-600
+                        'primary-dark': '#4338ca', // Indigo-700
+                        'primary-light': '#e0e7ff', // Indigo-100
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        :root {
-            --primary-color: #4f46e5;     
-            --primary-hover: #4338ca;       
-            --primary-subtle: #e0e7ff;      
-            --text-dark: #0f172a;
-            --text-gray: #64748b;
-            --bg-body: #f8fafc;
-        }
-
-        body, .navbar-brand, .nav-link, h1, h2, h3, h4, h5, h6, p, span, small, button, a {
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-dark);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.8rem 0;
-        }
-
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--text-dark) !important;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-link {
-            font-weight: 600;
-            color: var(--text-gray) !important;
-            margin: 0 4px;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-        }
-        
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-color) !important;
-        }
-
-        .btn-nav {
-            padding: 8px 24px !important;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .btn-nav-login {
-            background: white;
-            border: 2px solid #e2e8f0;
-            color: var(--text-dark) !important;
-        }
-
-        .btn-nav-login:hover {
-            background-color: var(--primary-subtle); 
-            border-color: var(--primary-color);     
-            color: var(--primary-color) !important;  
-            transform: translateY(-2px);            
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
-        }
-
-        .btn-nav-register {
-            background: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            color: white !important;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
-        }
-
-        .btn-nav-register:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-            color: white !important;                 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-        }
-
-        footer {
-            background: white;
-            border-top: 1px solid #e2e8f0;
-            margin-top: auto;
-            padding: 1.5rem 0;
-            font-size: 0.85rem;
-        }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 flex flex-col min-h-screen selection:bg-primary selection:text-white">
 
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container-xl"> 
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-                <i class="bi bi-bag-heart-fill" style="color: var(--primary-color); font-size: 1.4rem;"></i>
-                MahasiswaStore.
-            </a>
-            
-            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <nav x-data="{ mobileMenuOpen: false, scrolled: false }" 
+         @scroll.window="scrolled = (window.pageYOffset > 10)"
+         :class="scrolled ? 'bg-white/95 backdrop-blur-xl shadow-sm border-slate-200' : 'bg-white/50 backdrop-blur-md border-transparent'"
+         class="fixed top-0 w-full z-50 transition-all duration-300 border-b">
+         
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                
+                <a href="{{ route('home') }}" class="group flex items-center gap-2.5">
+                    <div class="bg-gradient-to-br from-primary to-purple-600 text-white w-8 h-8 rounded-lg flex items-center justify-center shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                        <i class="fa-solid fa-bag-shopping text-xs"></i>
+                    </div>
+                    <span class="font-extrabold text-lg tracking-tight text-slate-900">
+                        Tech<span class="text-primary">Store.</span>
+                    </span>
+                </a>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center gap-2"> <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link" href="#">Katalog</a>
-                    </li>
+                <div class="hidden md:flex items-center gap-8">
+                    <div class="flex items-center gap-6">
+                        <a href="{{ route('home') }}" class="relative text-sm font-bold text-slate-600 hover:text-primary transition-colors group py-2">
+                            Beranda
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="{{ route('home') }}#katalog" class="relative text-sm font-bold text-slate-600 hover:text-primary transition-colors group py-2">
+                            Katalog
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                    </div>
+                    
+                    <div class="w-px h-5 bg-slate-200"></div>
 
                     @auth
-                        <li class="nav-item dropdown ms-lg-2">
-                            <a class="nav-link dropdown-toggle fw-bold text-dark bg-light rounded-pill px-3 border" href="#" role="button" data-bs-toggle="dropdown">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg rounded-4 mt-2 p-2" style="font-size: 0.9rem;">
-                                <li><a class="dropdown-item rounded-3 py-2" href="{{ route('dashboard') }}"><i class="bi bi-grid me-2"></i> Dashboard</a></li>
-                                <li><a class="dropdown-item rounded-3 py-2" href="#"><i class="bi bi-cart me-2"></i> Keranjang</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item rounded-3 text-danger fw-bold py-2">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" @click.outside="open = false" 
+                                    class="flex items-center gap-2 pl-1 pr-3 py-1.5 rounded-full border border-slate-200 bg-white hover:border-primary transition-colors group">
+                                <div class="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs group-hover:bg-primary-dark transition-colors">
+                                    {{ substr(Auth::user()->name, 0, 1) }}
+                                </div>
+                                <span class="text-xs font-bold text-slate-700 group-hover:text-primary transition-colors">{{ Auth::user()->name }}</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform duration-300" :class="open ? 'rotate-180' : ''"></i>
+                            </button>
+
+                            <div x-show="open" 
+                                 x-transition.origin.top.right
+                                 class="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-xl border border-slate-100 p-1 transform origin-top-right focus:outline-none" 
+                                 style="display: none;">
+                                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-primary rounded-lg transition-colors">
+                                    <i class="fa-solid fa-gauge-high w-4 text-center"></i> Dashboard
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full flex items-center gap-2 text-left px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-arrow-right-from-bracket w-4 text-center"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     @else
-                        <li class="nav-item">
-                            <a class="btn-nav btn-nav-login" href="{{ route('login') }}">
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('login') }}" 
+                               class="px-6 py-2.5 rounded-full text-xs font-bold text-slate-700 border border-slate-200 hover:border-primary hover:text-primary bg-white transition-colors duration-300">
                                 Masuk
                             </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="btn-nav btn-nav-register" href="{{ route('register') }}">
+                            <a href="{{ route('register') }}" 
+                               class="px-6 py-2.5 rounded-full text-xs font-bold text-white bg-primary hover:bg-primary-dark shadow-md shadow-indigo-500/20 transition-colors duration-300">
                                 Daftar
                             </a>
-                        </li>
+                        </div>
                     @endauth
-                </ul>
+                </div>
+
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-slate-600 hover:text-primary transition-colors">
+                    <i class="fa-solid fa-bars-staggered text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden bg-white border-t border-slate-100 shadow-xl">
+            <div class="p-4 space-y-3">
+                <a href="{{ route('home') }}" class="block px-4 py-2 rounded-lg bg-slate-50 text-primary font-bold text-sm">Beranda</a>
+                <a href="{{ route('home') }}#katalog" class="block px-4 py-2 rounded-lg hover:bg-slate-50 text-slate-600 font-bold text-sm">Katalog</a>
+                @auth
+                    <div class="border-t border-slate-100 my-2"></div>
+                    <a href="{{ route('dashboard') }}" class="block px-4 py-2 rounded-lg hover:bg-slate-50 text-slate-600 font-bold text-sm">Dashboard</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="w-full text-left px-4 py-2 rounded-lg text-red-500 font-bold text-sm hover:bg-red-50">Logout</button>
+                    </form>
+                @else
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <a href="{{ route('login') }}" class="text-center py-2 border border-slate-200 rounded-lg font-bold text-slate-700 text-sm hover:bg-slate-50">Masuk</a>
+                        <a href="{{ route('register') }}" class="text-center py-2 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary-dark">Daftar</a>
+                    </div>
+                @endauth
             </div>
         </div>
     </nav>
 
-    <main>
+    <main class="flex-grow pt-16">
         @yield('content')
     </main>
 
-    <footer>
-        <div class="container-xl text-center">
-            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1 gap-md-3">
-                <span class="fw-bold text-dark">MahasiswaStore &copy; {{ date('Y') }}</span>
-                <span class="d-none d-md-block text-muted">|</span>
-                <span class="text-secondary">Tugas Praktikum Pemrograman Web - FILKOM</span>
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6">
+        <div class="flex flex-col items-center justify-center gap-2">
+            
+            <div class="flex items-center gap-2.5">
+                <div class="bg-gradient-to-br from-primary to-purple-600 text-white w-8 h-8 rounded-lg flex items-center justify-center shadow-lg shadow-primary/30">
+                    <i class="fa-solid fa-bag-shopping text-xs"></i>
+                </div>
+                <span class="font-extrabold text-lg tracking-tight text-slate-900">
+                    Tech<span class="text-primary">Store.</span>
+                </span>
             </div>
+            
+            <p class="text-slate-500 text-sm font-medium">
+                &copy; {{ date('Y') }} Tech Store. All rights reserved.
+            </p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

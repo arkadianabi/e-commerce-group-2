@@ -121,5 +121,45 @@ class DatabaseSeeder extends Seeder
             'image' => 'casing.jpg',
             'is_thumbnail' => true,
         ]);
+
+        // produk 3
+        $product3 = Product::create([
+            'store_id' => $store->id,
+            'product_category_id' => $catElektronik->id,
+            'name' => 'Asus ROG Strix G15',
+            'slug' => 'Asus-ROG-Strix-G15',
+            'description' => 'Laptop Gaming.',
+            'condition' => 'new',
+            'price' => 20000000,
+            'weight' => 20000000,
+            'stock' => 100,
+        ]);
+
+        // menambahkan gambar untuk produk 3
+        ProductImage::create([
+            'product_id' => $product3->id,
+            'image' => 'Asus.jpg',
+            'is_thumbnail' => true,
+        ]);
+
+        // produk 3
+        $product4 = Product::create([
+            'store_id' => $store->id,
+            'product_category_id' => $catElektronik->id,
+            'name' => 'HP Pavilion 15',
+            'slug' => 'HP-Pavilion-15',
+            'description' => 'Laptop Gaming.',
+            'condition' => 'new',
+            'price' => 11000000,
+            'weight' => 11000000,
+            'stock' => 20,
+        ]);
+
+        // menambahkan gambar untuk produk 4
+        ProductImage::create([
+            'product_id' => $product4->id,
+            'image' => 'HP.jpg',
+            'is_thumbnail' => true,
+        ]);
     }
 }
