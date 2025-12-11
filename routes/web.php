@@ -1,41 +1,69 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Front\HomeController; 
 use Illuminate\Support\Facades\Route;
+
+// FRONT CONTROLLERS
+use App\Http\Controllers\Front\HomeController; 
 use App\Http\Controllers\Front\DashboardController;
 use App\Http\Controllers\Front\CheckoutController; 
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\TransactionController;
 use App\Http\Controllers\Front\PaymentController;
 use App\Http\Controllers\StoreController;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\SellerMiddleware;
-use App\Http\Controllers\Seller\SellerProductController;
-use App\Http\Controllers\Seller\SellerWithdrawController; // <--- Pastikan ini ada
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProductReviewController;
 
-// Halaman Beranda
+// SELLER CONTROLLERS
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerOrderController;
+use App\Http\Controllers\Seller\SellerStoreController;
+use App\Http\Controllers\Seller\SellerWithdrawController;
+
+// ADMIN CONTROLLERS
+use App\Http\Controllers\Admin\StoreAdminController;
+use App\Http\Controllers\Admin\AdminUserStoreController;
+
+// MIDDLEWARES
+use App\Http\Middleware\SellerMiddleware;
+
+// =========================
+//        PUBLIC ROUTES
+// =========================
+
+// Halaman utama
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Halaman Detail Produk
+// Detail produk
 Route::get('/product/{slug}', [HomeController::class, 'show'])->name('product.detail');
 
-// Dashboard Utama
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+
+// =========================
+//       AUTH ROUTES
+// =========================
 
 Route::middleware('auth')->group(function () {
-    // Profil Pengguna
+
+    // Dashboard user
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->middleware(['verified'])
+        ->name('dashboard');
+
+    // Profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Checkout
-    Route::get('/checkout/{slug}', [CheckoutController::class, 'index'])->name('front.checkout');
-    Route::post('/checkout/{slug}', [CheckoutController::class, 'store'])->name('front.checkout.store');
+    // Review produk
+    Route::post('/product/{slug}/review', [ProductReviewController::class, 'store'])
+        ->name('product.review.store');
 
-    // Keranjang Belanja
+    // Checkout
+    Route::get('/checkout/{slug}', [CheckoutController::class, 'index'])
+        ->name('front.checkout');
+    Route::post('/checkout/{slug}', [CheckoutController::class, 'store'])
+        ->name('front.checkout.store');
+
+    // Keranjang
     Route::get('/carts', [CartController::class, 'index'])->name('carts.index');
     Route::post('/carts/{slug}', [CartController::class, 'store'])->name('carts.store');
     Route::delete('/carts/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
@@ -48,48 +76,76 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/{code}', [PaymentController::class, 'index'])->name('front.payment');
     Route::post('/payment/{code}', [PaymentController::class, 'update'])->name('front.payment.update');
 
-    // Buka Toko
+    // Buka toko (buyer)
     Route::get('/open-store', [StoreController::class, 'create'])->name('stores.create');
     Route::post('/open-store', [StoreController::class, 'store'])->name('stores.store');
 
-    // --- GROUP ROUTE KHUSUS SELLER ---
-    // --- GROUP ROUTE KHUSUS SELLER ---
-    Route::middleware([SellerMiddleware::class]) 
+
+    // =========================
+    //      SELLER ROUTES
+    // =========================
+
+    Route::middleware([SellerMiddleware::class])
         ->prefix('seller')
         ->name('seller.')
         ->group(function () {
 
-            // 1. Resource Produk (INI YANG BENAR)
-            Route::resource('products', App\Http\Controllers\Seller\SellerProductController::class);
+            // Produk
+            Route::resource('products', SellerProductController::class);
 
-            // 2. Route Pesanan
-            Route::get('/orders', [App\Http\Controllers\Seller\SellerOrderController::class, 'index'])->name('orders.index');
-            Route::get('/orders/{id}', [App\Http\Controllers\Seller\SellerOrderController::class, 'show'])->name('orders.show');
-            Route::put('/orders/{id}', [App\Http\Controllers\Seller\SellerOrderController::class, 'update'])->name('orders.update');
-        
-            // 3. HAPUS BAGIAN INI (KARENA MENIMPA ROUTE PRODUK DI ATAS)
-            // Route::get('/products', function() { return "Halaman Produk (Segera Hadir)"; })->name('products.index'); <--- HAPUS INI
+            // Pesanan
+            Route::get('/orders', [SellerOrderController::class, 'index'])->name('orders.index');
+            Route::get('/orders/{id}', [SellerOrderController::class, 'show'])->name('orders.show');
+            Route::put('/orders/{id}', [SellerOrderController::class, 'update'])->name('orders.update');
 
-            // Halaman Edit Toko
-            Route::get('/store-settings', [App\Http\Controllers\Seller\SellerStoreController::class, 'edit'])->name('store.edit');
-        
-            // Proses Update Toko
-            Route::put('/store-settings', [App\Http\Controllers\Seller\SellerStoreController::class, 'update'])->name('store.update');
-        
-            // Proses Hapus Toko
-            Route::delete('/store-settings', [App\Http\Controllers\Seller\SellerStoreController::class, 'destroy'])->name('store.destroy');
-            
-            // Route Placeholder Lainnya (Boleh disimpan atau dihapus jika fitur sudah dibuat)
-            Route::get('/balance', function() { return "Halaman Saldo (Segera Hadir)"; })->name('balance.index');
-            // Halaman Utama Penarikan & Riwayat
+            // Pengaturan toko
+            Route::get('/store-settings', [SellerStoreController::class, 'edit'])->name('store.edit');
+            Route::put('/store-settings', [SellerStoreController::class, 'update'])->name('store.update');
+            Route::delete('/store-settings', [SellerStoreController::class, 'destroy'])->name('store.destroy');
+
+            // Saldo & Penarikan
+            Route::get('/balance', function () { return "Halaman Saldo (Segera Hadir)"; })
+                ->name('balance.index');
+
             Route::get('/withdraw', [SellerWithdrawController::class, 'index'])->name('withdraw.index');
-            
-            // Proses Ajukan Penarikan (Tarik Dana)
             Route::post('/withdraw', [SellerWithdrawController::class, 'store'])->name('withdraw.store');
-            
-            // Proses Update Info Rekening Bank
             Route::put('/withdraw/bank', [SellerWithdrawController::class, 'updateBank'])->name('withdraw.updateBank');
-    });
+        });
 });
 
-require __DIR__.'/auth.php';
+
+// =========================
+//       ADMIN ROUTES
+// =========================
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        // Dashboard Admin
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
+
+        // Verifikasi toko
+        Route::get('/store-verification', [StoreAdminController::class, 'index'])
+            ->name('store.verification');
+
+        Route::post('/store-verification/{id}/approve', [StoreAdminController::class, 'approve'])
+            ->name('store.verify');
+
+        Route::post('/store-verification/{id}/reject', [StoreAdminController::class, 'reject'])
+            ->name('store.reject');
+
+        // Manajemen User + Store
+        Route::get('/user-store-management', [AdminUserStoreController::class, 'index'])
+            ->name('management');
+
+        Route::get('/user-management/{id}/edit', [AdminUserStoreController::class, 'edit'])
+            ->name('user.edit');
+    });
+
+
+// AUTH ROUTES (Laravel Breeze)
+require __DIR__ . '/auth.php';
