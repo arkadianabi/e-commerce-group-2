@@ -11,8 +11,8 @@
             <i class="fa-solid fa-bag-shopping text-9xl absolute -bottom-10 -right-10 text-white transform rotate-12"></i>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h1 class="text-3xl font-bold text-white mb-2">X</h1>
-            <p class="text-indigo-100 text-sm">Panel kontrol untuk memverifikasi toko dan mengelola pengguna.</p>
+            <h1 class="text-3xl font-bold text-white mb-2"></h1>
+            <p class="text-indigo-100 text-sm"></p>
         </div>
     </div>
 
@@ -107,3 +107,4 @@
         </div>
     </div>
 </div>
+@endsection

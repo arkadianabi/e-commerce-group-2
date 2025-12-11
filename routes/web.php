@@ -23,6 +23,7 @@ use App\Http\Controllers\Seller\SellerWithdrawController;
 use App\Http\Controllers\Admin\StoreAdminController;
 use App\Http\Controllers\Admin\AdminUserStoreController;
 
+
 // MIDDLEWARES
 use App\Http\Middleware\SellerMiddleware;
 
@@ -128,7 +129,7 @@ Route::middleware(['auth', 'admin'])
             return view('admin.dashboard');
         })->name('dashboard');
 
-        // Verifikasi toko
+        // Verifikasi Toko
         Route::get('/store-verification', [StoreAdminController::class, 'index'])
             ->name('store.verification');
 
@@ -138,13 +139,18 @@ Route::middleware(['auth', 'admin'])
         Route::post('/store-verification/{id}/reject', [StoreAdminController::class, 'reject'])
             ->name('store.reject');
 
-        // Manajemen User + Store
+        // Manajemen User & Toko
         Route::get('/user-store-management', [AdminUserStoreController::class, 'index'])
             ->name('management');
 
         Route::get('/user-management/{id}/edit', [AdminUserStoreController::class, 'edit'])
             ->name('user.edit');
+
+        // Route baru untuk update user
+        Route::put('/user-management/{id}', [AdminUserStoreController::class, 'update'])
+            ->name('user.update');
     });
+
 
 
 // AUTH ROUTES (Laravel Breeze)
